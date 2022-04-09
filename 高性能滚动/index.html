@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .body {
+      width: 100%;
+      height: 100%;
+      background: #f5f5f5;
+    }
+
+    .scroll-down {
+      transform: translate3d(0, -200%, 0);
+    }
+
+    .header {
+      position: fixed;
+      height: 40px;
+      left: 0px;
+      top: 0px;
+      background-color: aliceblue;
+      width: 100%;
+      z-index: 10;
+      box-sizing: border-box;
+    }
+
+    .content {
+      transition: all 50ms ease-in-out;
+    }
+
+    .qianyi {
+      transform: translateY(-2%);
+    }
+
+    .box {
+      width: 100%;
+      height: 100px;
+      border: 1px solid rgb(231, 24, 24);
+      box-sizing: border-box;
+    }
+
+    .box_inside {
+      width: 100%;
+      height: 100%;
+      background: #f5f5f5;
+      position: relative;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .box_inside>.reduce {
+      width: 80%;
+      height: 50px;
+      border-radius: 30px;
+      border: 1px solid black;
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .bd {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='root'>
+    <div class="body">
+      <div class="box" v-show="!fold">
+        <div class="box_inside">
+          <div class="reduce"></div>
+        </div>
+      </div>
+      <div class="header bd center" v-show="fold">
+        {{['-1','-2','-3'][index] || '-1'}}
+        <div class="fold" ref="fold"></div>
+      </div>
+      <div v-for="i in 10">
+        <h1>{{i}}</h1>
+        <ul>
+          <li v-for="ii in 20">
+            {{ii}}
+          </li>
+        </ul>
+      </div>
+      <!-- <ul :class="`content ${fold?'qianyi':''}`" style="margin-top: 25px;">
+        <div v-for="i in ['-1','-2','-3']">
+          <h3 id="title" ref="titles" style="background-color: yellow;">{{i}}</h3>
+          <div class="center" v-for="ii in 50">
+            <h5>{{ii}}</h5>
+          </div>
+        </div>
+      </ul> -->
+      <!-- <div class="blank" style="height: 60px;"></div> -->
+    </div>
+  </div>
+  <script src='https://cdn.bootcss.com/vue/2.5.16/vue.min.js'></script>
+  <script>
+    const processor = {
+      timeoutId: null,
+      //实际执行的代码
+      performProcessing: function (e) {
+        console.log("eeee",e);
+        console.log('performProcessing 方法, 你的处理逻辑')
+        console.log('hello word')
+      },
+      //初始处理调用的方法
+      process: function (e) {
+        console.log('process方法')
+        clearTimeout(this.timeoutId)
+        var that = this
+        this.timeoutId = setTimeout(function () {
+          that.performProcessing(e)
+        }, 100)
+      }
+    }
+    // https://blog.csdn.net/a5534789/article/details/77712234
+
+    Array.prototype.findlastIndex = function (callback) {
+      let len = this.length,
+        index = -1;
+
+      while (index < len) {
+        ++index
+        const value = callback(this[index], index)
+
+        if (!value) {
+          return index - 1
+        }
+      }
+    }
+
+
+    new Vue({
+      el: '#root',
+      data: {
+        fold: false,
+        index: ''
+      },
+      methods: {
+        handleScroll() {
+          let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+
+          if (scrollTop > 0) {
+            if (scrollTop > 50) {
+              this.fold = true;
+            }
+            return
+          } else {
+            this.fold = false;
+          }
+
+        }
+      },
+      mounted() {
+        window.onscroll = function (e) {
+          processor.process(e)
+        }
+      },
+    });
+  </script>
+</body>
+
+</html>

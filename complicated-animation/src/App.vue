@@ -23,7 +23,7 @@
 @keyframes move {
   @for $i from 0 through 100 {
     #{$i}% {
-      left: lerp(100px, 200px, spring-wobbly($i / 100));
+      left: lerp(100px, 200px, spring-wobbly(calc($i/100)));
     }
   }
 }

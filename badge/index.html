@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .badge {
+      width: 94px;
+      height: 38px;
+      background: linear-gradient(225deg, #39AFFD 0%, #477FFF 100%);
+      border-radius: 8px 8px 8px 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='root'>
+    <div class="badge"></div>
+  </div>
+  <script src='https://cdn.bootcss.com/vue/2.5.16/vue.min.js'></script>
+  <script>
+    new Vue({
+      el: '#root',
+      data: {
+        value: '',
+      },
+      methods: {
+      },
+    });
+  </script>
+</body>
+
+</html>
